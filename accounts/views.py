@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from accounts.serializers import RegisterSerializer
+from accounts.serializers import RegisterSerializer, UserSerializer
 
 
 class RegisterAPIView(APIView):
@@ -73,7 +73,7 @@ class LoginAPIView(APIView):
 
 
 class LogoutAPIView(APIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def post(self, request):
         refresh_token = request.data.get("refresh")
@@ -95,3 +95,8 @@ class LogoutAPIView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
+class CurrentUserAPIView(APIView):
+    # permission_classes = []
+    def get(self, request):
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data, status=status.HTTP_200_OK)

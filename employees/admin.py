@@ -7,6 +7,7 @@ from employees.models import Employee
 class EmployeeAdmin(admin.ModelAdmin):
 
     list_display = (
+        "id",
         "employee_code",
         "department",
         "designation",
